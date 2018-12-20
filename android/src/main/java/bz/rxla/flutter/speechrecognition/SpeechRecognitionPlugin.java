@@ -102,7 +102,8 @@ public class SpeechRecognitionPlugin implements MethodCallHandler, RecognitionLi
 
     @Override
     public void onRmsChanged(float rmsdB) {
-        Log.d(LOG_TAG, "onRmsChanged : " + rmsdB);
+        // this causes a lot of spam during debugging
+        // Log.d(LOG_TAG, "onRmsChanged : " + rmsdB);
     }
 
     @Override

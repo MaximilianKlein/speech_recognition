@@ -28,6 +28,8 @@ class SpeechRecognition {
 
   VoidCallback recognitionCompleteHandler;
 
+  StringResultHandler recognitionErrorHandler;
+
   /// ask for speech  recognizer permission
   Future activate() => _channel.invokeMethod("speech.activate");
 
@@ -57,6 +59,9 @@ class SpeechRecognition {
       case "speech.onRecognitionComplete":
         recognitionCompleteHandler();
         break;
+      case "speech.onError":
+        recognitionErrorHandler(call.arguments.toString());
+        break;
       default:
         print('Unknown method ${call.method} ');
     }
@@ -77,6 +82,10 @@ class SpeechRecognition {
   // define a method to handle native call
   void setRecognitionCompleteHandler(VoidCallback handler) =>
       recognitionCompleteHandler = handler;
+
+  // define a method to handle native call
+  void setRecognitionErrorHandler(StringResultHandler handler) =>
+      recognitionErrorHandler = handler;
 
   void setCurrentLocaleHandler(StringResultHandler handler) =>
       currentLocaleHandler = handler;
