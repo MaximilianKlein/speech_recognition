@@ -61,7 +61,7 @@ public class SpeechRecognitionPlugin implements MethodCallHandler, RecognitionLi
             // is declared in the manifest and accepted during installation ( AndroidSDK 21- )
             result.success(true);
             Locale locale = activity.getResources().getConfiguration().locale;
-            Log.d(LOG_TAG, "Current Locale : " + locale.toString());
+            //Log.d(LOG_TAG, "Current Locale : " + locale.toString());
             speechChannel.invokeMethod("speech.onCurrentLocale", locale.toString());
         } else if (call.method.equals("speech.listen")) {
             recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getLocale(call.arguments.toString()));
@@ -88,13 +88,13 @@ public class SpeechRecognitionPlugin implements MethodCallHandler, RecognitionLi
 
     @Override
     public void onReadyForSpeech(Bundle params) {
-        Log.d(LOG_TAG, "onReadyForSpeech");
+        //Log.d(LOG_TAG, "onReadyForSpeech");
         speechChannel.invokeMethod("speech.onSpeechAvailability", true);
     }
 
     @Override
     public void onBeginningOfSpeech() {
-        Log.d("SYDOTY", "onRecognitionStarted");
+        //Log.d("SYDOTY", "onRecognitionStarted");
         transcription = "";
 
         speechChannel.invokeMethod("speech.onRecognitionStarted", null);
@@ -113,7 +113,7 @@ public class SpeechRecognitionPlugin implements MethodCallHandler, RecognitionLi
 
     @Override
     public void onEndOfSpeech() {
-        Log.d(LOG_TAG, "onEndOfSpeech");
+        //Log.d(LOG_TAG, "onEndOfSpeech");
         // don't call this here because then onRecognitionComplete will be called twice and possibly
         // with different values
         //speechChannel.invokeMethod("speech.onRecognitionComplete", transcription);
@@ -121,14 +121,14 @@ public class SpeechRecognitionPlugin implements MethodCallHandler, RecognitionLi
 
     @Override
     public void onError(int error) {
-        Log.d(LOG_TAG, "onError : " + error);
+        //Log.d(LOG_TAG, "onError : " + error);
         speechChannel.invokeMethod("speech.onSpeechAvailability", false);
         speechChannel.invokeMethod("speech.onError", error);
     }
 
     @Override
     public void onPartialResults(Bundle partialResults) {
-        Log.d(LOG_TAG, "onPartialResults...");
+        //Log.d(LOG_TAG, "onPartialResults...");
         ArrayList<String> matches = partialResults
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         transcription = matches.get(0);
@@ -143,12 +143,12 @@ public class SpeechRecognitionPlugin implements MethodCallHandler, RecognitionLi
 
     @Override
     public void onResults(Bundle results) {
-        Log.d(LOG_TAG, "onResults...");
+        //Log.d(LOG_TAG, "onResults...");
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String text = "";
         transcription = matches.get(0);
-        Log.d(LOG_TAG, "onResults -> " + transcription);
+        //Log.d(LOG_TAG, "onResults -> " + transcription);
         sendTranscription(true);
     }
 

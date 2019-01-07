@@ -70,13 +70,13 @@ public class SwiftSpeechRecognitionPlugin: NSObject, FlutterPlugin, SFSpeechReco
         case .notDetermined:
           result(false)
         }
-        print("SFSpeechRecognizer.requestAuthorization \(authStatus.rawValue)")
+        //print("SFSpeechRecognizer.requestAuthorization \(authStatus.rawValue)")
       }
     }
   }
 
   private func startRecognition(lang: String, result: FlutterResult) {
-    print("startRecognition...")
+    //print("startRecognition...")
     if audioEngine.isRunning {
       audioEngine.stop()
       recognitionRequest?.endAudio()
@@ -130,7 +130,7 @@ public class SwiftSpeechRecognitionPlugin: NSObject, FlutterPlugin, SFSpeechReco
       var isFinal = false
 
       if let result = result {
-        print("Speech : \(result.bestTranscription.formattedString)")
+        //print("Speech : \(result.bestTranscription.formattedString)")
         self.speechChannel?.invokeMethod("speech.onSpeech", arguments: result.bestTranscription.formattedString)
         isFinal = result.isFinal
         if isFinal {
