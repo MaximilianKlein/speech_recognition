@@ -26,7 +26,6 @@ public class SpeechRecognitionPlugin implements MethodCallHandler, RecognitionLi
     private SpeechRecognizer speech;
     private MethodChannel speechChannel;
     private String transcription = "";
-    private boolean cancelled = false;
     private Intent recognizerIntent;
     private Activity activity;
 
@@ -67,24 +66,20 @@ public class SpeechRecognitionPlugin implements MethodCallHandler, RecognitionLi
                 break;
             case "speech.listen":
                 recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getLocale(call.arguments.toString()));
-                cancelled = false;
                 speech.startListening(recognizerIntent);
                 result.success(true);
                 break;
             case "speech.cancel":
                 speech.cancel();
-                cancelled = true;
                 result.success(false);
                 break;
             case "speech.stop":
                 speech.stopListening();
-                cancelled = false;
                 result.success(true);
                 break;
             case "speech.destroy":
                 speech.cancel();
                 speech.destroy();
-                cancelled = true;
                 result.success(true);
                 break;
             default:
