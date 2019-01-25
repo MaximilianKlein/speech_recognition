@@ -124,7 +124,10 @@ public class SpeechRecognitionPlugin implements MethodCallHandler, RecognitionLi
     @Override
     public void onError(int error) {
         //Log.d(LOG_TAG, "onError : " + error);
-        speechChannel.invokeMethod("speech.onSpeechAvailability", false);
+        // error 6 is timeout, error 7 is nothing recognized. these do NOT impair availability
+        if (!(error == 6 || error == 7)){
+            speechChannel.invokeMethod("speech.onSpeechAvailability", false);
+        }
         speechChannel.invokeMethod("speech.onError", error);
     }
 

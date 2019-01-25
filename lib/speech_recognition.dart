@@ -28,7 +28,7 @@ class SpeechRecognition {
 
   StringResultHandler recognitionCompleteHandler;
   
-  VoidCallback errorHandler;
+  StringResultHandler errorHandler;
 
   StringResultHandler recognitionErrorHandler;
 
@@ -64,9 +64,6 @@ class SpeechRecognition {
         recognitionCompleteHandler(call.arguments);
         break;
       case "speech.onError":
-        errorHandler();
-        break;
-      case "speech.onError":
         recognitionErrorHandler(call.arguments.toString());
         break;
       default:
@@ -97,5 +94,5 @@ class SpeechRecognition {
   void setCurrentLocaleHandler(StringResultHandler handler) =>
       currentLocaleHandler = handler;
   
-  void setErrorHandler(VoidCallback handler) => errorHandler = handler;
+  void setErrorHandler(StringResultHandler handler) => errorHandler = handler;
 }
