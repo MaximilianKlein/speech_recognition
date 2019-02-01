@@ -82,7 +82,12 @@ public class SwiftSpeechRecognitionPlugin: NSObject, FlutterPlugin, SFSpeechReco
       recognitionRequest?.endAudio()
       result(false)
     } else {
-      try! start(lang: lang)
+      do{
+        try start(lang: lang)
+      }
+      catch{
+        result(false)
+      }
       result(true)
     }
   }
